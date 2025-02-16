@@ -14,8 +14,8 @@ const Home = () => {
     <div className="home-container">
       <h1 className="home-title">Latest Blogs</h1>
       <div className="blog-grid">
-        {blogs.map((blog) => (
-          <BlogCard key={blog.id} blog={blog} />
+        {blogs.map((blog, index) => (
+          <BlogCard key={blog._id || index} blog={blog} />
         ))}
       </div>
     </div>
