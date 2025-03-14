@@ -1,0 +1,76 @@
+---
+title: "Array Operations in JavaScript"
+description: "A guide to array operations in JavaScript, including insertion, deletion, searching, and updating."
+slug: "arrat"
+published: "2025-03-11"
+author: "Unknown"
+---
+
+# Array Operations in JavaScript  
+
+This blog explores common array operations in JavaScript, including insertion, deletion, searching, and updating.  
+
+## JavaScript Code Example  
+
+```js
+class ArrayOperations {
+  constructor() {
+    this.arr = [];
+  }
+
+  insertElement(element, position) {
+    if (position < 0 || position > this.arr.length) {
+      console.log("Invalid position!");
+      return;
+    }
+    this.arr.splice(position, 0, element);
+    console.log(`Inserted ${element} at position ${position}`);
+  }
+
+  deleteElement(position) {
+    if (position < 0 || position >= this.arr.length) {
+      console.log("Invalid position!");
+      return;
+    }
+    const deleted = this.arr.splice(position, 1);
+    console.log(`Deleted element ${deleted} from position ${position}`);
+  }
+
+  searchElement(element) {
+    const index = this.arr.indexOf(element);
+    if (index !== -1) {
+      console.log(`Element ${element} found at position ${index}`);
+    } else {
+      console.log(`Element ${element} not found!`);
+    }
+  }
+
+  updateElement(position, newValue) {
+    if (position < 0 || position >= this.arr.length) {
+      console.log("Invalid position!");
+      return;
+    }
+    console.log(`Updated position ${position} from ${this.arr[position]} to ${newValue}`);
+    this.arr[position] = newValue;
+  }
+
+  displayArray() {
+    console.log("Current Array:", this.arr);
+  }
+}
+
+const myArray = new ArrayOperations();
+
+myArray.insertElement(10, 0);
+myArray.insertElement(20, 1);
+myArray.insertElement(30, 2);
+myArray.displayArray();
+
+myArray.deleteElement(1);
+myArray.displayArray();
+
+myArray.searchElement(30);
+myArray.searchElement(50);
+
+myArray.updateElement(0, 100);
+myArray.displayArray();
