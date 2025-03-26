@@ -1,76 +1,8 @@
-rom Wikipedia, the free encyclopedia
-For other uses, see Recursion (disambiguation).
+---
+title: "2"
+description: "2"
+category: "Operating System"
+slug: "2"
+---
 
-A visual form of recursion known as the Droste effect. The woman in this image holds an object that contains a smaller image of her holding an identical object, which in turn contains a smaller image of herself holding an identical object, and so forth. 1904 Droste cocoa tin, designed by Jan Misset.
-Recursion occurs when the definition of a concept or process depends on a simpler or previous version of itself.[1] Recursion is used in a variety of disciplines ranging from linguistics to logic. The most common application of recursion is in mathematics and computer science, where a function being defined is applied within its own definition. While this apparently defines an infinite number of instances (function values), it is often done in such a way that no infinite loop or infinite chain of references can occur.
-
-A process that exhibits recursion is recursive. Video feedback displays recursive images, as does an infinity mirror.
-
-Formal definitions
-
-Ouroboros, an ancient symbol depicting a serpent or dragon eating its own tail
-In mathematics and computer science, a class of objects or methods exhibits recursive behavior when it can be defined by two properties:
-
-A simple base case (or cases) — a terminating scenario that does not use recursion to produce an answer
-A recursive step — a set of rules that reduces all successive cases toward the base case.
-For example, the following is a recursive definition of a person's ancestor. One's ancestor is either:
-
-One's parent (base case), or
-One's parent's ancestor (recursive step).
-The Fibonacci sequence is another classic example of recursion:
-
-Fib(0) = 0 as base case 1,
-Fib(1) = 1 as base case 2,
-For all integers n > 1, Fib(n) = Fib(n − 1) + Fib(n − 2).
-Many mathematical axioms are based upon recursive rules. For example, the formal definition of the natural numbers by the Peano axioms can be described as: "Zero is a natural number, and each natural number has a successor, which is also a natural number."[2] By this base case and recursive rule, one can generate the set of all natural numbers.
-
-Other recursively defined mathematical objects include factorials, functions (e.g., recurrence relations), sets (e.g., Cantor ternary set), and fractals.
-
-There are various more tongue-in-cheek definitions of recursion; see recursive humor.
-
-Informal definition
-
-Sourdough starter being stirred into flour to produce sourdough: the recipe calls for some sourdough left over from the last time the same recipe was made.
-Recursion is the process a procedure goes through when one of the steps of the procedure involves invoking the procedure itself. A procedure that goes through recursion is said to be 'recursive'.[3]
-
-To understand recursion, one must recognize the distinction between a procedure and the running of a procedure. A procedure is a set of steps based on a set of rules, while the running of a procedure involves actually following the rules and performing the steps.
-
-Recursion is related to, but not the same as, a reference within the specification of a procedure to the execution of some other procedure.
-
-When a procedure is thus defined, this immediately creates the possibility of an endless loop; recursion can only be properly used in a definition if the step in question is skipped in certain cases so that the procedure can complete.
-
-Even if it is properly defined, a recursive procedure is not easy for humans to perform, as it requires distinguishing the new from the old, partially executed invocation of the procedure; this requires some administration as to how far various simultaneous instances of the procedures have progressed. For this reason, recursive definitions are very rare in everyday situations.
-
-In language
-Linguist Noam Chomsky, among many others, has argued that the lack of an upper bound on the number of grammatical sentences in a language, and the lack of an upper bound on grammatical sentence length (beyond practical constraints such as the time available to utter one), can be explained as the consequence of recursion in natural language.[4][5]
-
-This can be understood in terms of a recursive definition of a syntactic category, such as a sentence. A sentence can have a structure in which what follows the verb is another sentence: Dorothy thinks witches are dangerous, in which the sentence witches are dangerous occurs in the larger one. So a sentence can be defined recursively (very roughly) as something with a structure that includes a noun phrase, a verb, and optionally another sentence. This is really just a special case of the mathematical definition of recursion.
-
-This provides a way of understanding the creativity of language—the unbounded number of grammatical sentences—because it immediately predicts that sentences can be of arbitrary length: Dorothy thinks that Toto suspects that Tin Man said that.... There are many structures apart from sentences that can be defined recursively, and therefore many ways in which a sentence can embed instances of one category inside another.[6] Over the years, languages in general have proved amenable to this kind of analysis.
-
-The generally accepted idea that recursion is an essential property of human language has been challenged by Daniel Everett on the basis of his claims about the Pirahã language. Andrew Nevins, David Pesetsky and Cilene Rodrigues are among many who have argued against this.[7] Literary self-reference can in any case be argued to be different in kind from mathematical or logical recursion.[8]
-
-Recursion plays a crucial role not only in syntax, but also in natural language semantics. The word and, for example, can be construed as a function that can apply to sentence meanings to create new sentences, and likewise for noun phrase meanings, verb phrase meanings, and others. It can also apply to intransitive verbs, transitive verbs, or ditransitive verbs. In order to provide a single denotation for it that is suitably flexible, and is typically defined so that it can take any of these different types of meanings as arguments. This can be done by defining it for a simple case in which it combines sentences, and then defining the other cases recursively in terms of the simple one.[9]
-
-A recursive grammar is a formal grammar that contains recursive production rules.[10]
-
-Recursive humor
-Recursion is sometimes used humorously in computer science, programming, philosophy, or mathematics textbooks, generally by giving a circular definition or self-reference, in which the putative recursive step does not get closer to a base case, but instead leads to an infinite regress. It is not unusual for such books to include a joke entry in their glossary along the lines of:
-
-Recursion, see Recursion.[11]
-A variation is found on page 269 in the index of some editions of Brian Kernighan and Dennis Ritchie's book The C Programming Language; the index entry recursively references itself ("recursion 86, 139, 141, 182, 202, 269"). Early versions of this joke can be found in Let's talk Lisp by Laurent Siklóssy (published by Prentice Hall PTR on December 1, 1975, with a copyright date of 1976) and in Software Tools by Kernighan and Plauger (published by Addison-Wesley Professional on January 11, 1976). The joke also appears in The UNIX Programming Environment by Kernighan and Pike. It did not appear in the first edition of The C Programming Language. The joke is part of the functional programming folklore and was already widespread in the functional programming community before the publication of the aforementioned books. [12] [13]
-
-
-A plaque commemorates the Toronto Recursive History Project of Toronto's Recursive History.
-Another joke is that "To understand recursion, you must understand recursion."[11] In the English-language version of the Google web search engine, when a search for "recursion" is made, the site suggests "Did you mean: recursion."[14] An alternative form is the following, from Andrew Plotkin: "If you already know what recursion is, just remember the answer. Otherwise, find someone who is standing closer to Douglas Hofstadter than you are; then ask him or her what recursion is."
-
-Recursive acronyms are other examples of recursive humor. PHP, for example, stands for "PHP Hypertext Preprocessor", WINE stands for "WINE Is Not an Emulator", GNU stands for "GNU's not Unix", and SPARQL denotes the "SPARQL Protocol and RDF Query Language".
-
-In mathematics
-
-The Sierpiński triangle—a confined recursion of triangles that form a fractal
-Recursively defined sets
-Main article: Recursive definition
-Example: the natural numbers
-See also: Closure (mathematics)
-The canonical e
+2

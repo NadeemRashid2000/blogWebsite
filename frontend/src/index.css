@@ -19,11 +19,15 @@ code {
   @apply font-mono text-green-400;
 }
 
-
-//heeding
+/* Heading Styling */
 h1 { @apply text-4xl font-bold text-blue-600; }
 h2 { @apply text-3xl font-semibold text-blue-500; }
 h3 { @apply text-2xl font-medium text-blue-400; }
 h4 { @apply text-xl font-medium text-blue-300; }
 h5 { @apply text-lg font-medium text-blue-200; }
 h6 { @apply text-base font-medium text-blue-100; }
+
+/* Body Styling */
+body {
+  @apply font-sans text-gray-900 leading-relaxed tracking-normal;
+}

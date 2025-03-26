@@ -6,7 +6,8 @@ import {
   getBlogBySlug, 
   createBlog, 
   getBlogsByCategory, 
-  getCategories // ✅ Ensure this function is properly imported
+  getCategories, // ✅ Ensure this function is properly imported
+  deleteBlog
 } from "../controllers/blogController.js";
 import Blog from "../models/Blog.js"; // ✅ Import Blog model
 
@@ -18,6 +19,7 @@ router.get("/slug/:slug", getBlogBySlug);
 router.post("/", createBlog);
 router.get("/category/:category", getBlogsByCategory);
 router.get("/categories", getCategories);  // ✅ Fetch unique categories
+router.delete("/slug/:slug", deleteBlog); // ✅ Delete a blog by slug
 
 export default router;
 

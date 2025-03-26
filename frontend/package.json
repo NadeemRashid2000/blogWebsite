@@ -25,8 +25,6 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.35",
     "rehype-highlight": "^7.0.2",
     "remark-gfm": "^4.0.1",
     "tailwindcss": "^4.0.9",
