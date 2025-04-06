@@ -1,10 +1,10 @@
 import React from "react";
-import { deleteBlog } from "../api"; // ✅ Import delete function
-import { Link } from "react-router-dom"; // ✅ Import Link for navigation
+import { deleteBlog } from "../api"; //  Import delete function
+import { Link } from "react-router-dom"; //  Import Link for navigation
 
 const BlogCard = ({ blog, onDelete }) => {
-  // ✅ Debugging Log
-  console.log("📜 Blog data in BlogCard:", blog);
+  //  Debugging Log
+  console.log(" Blog data in BlogCard:", blog);
 
   const handleDelete = async () => {
     const confirmed = window.confirm(
@@ -14,16 +14,16 @@ const BlogCard = ({ blog, onDelete }) => {
 
     const success = await deleteBlog(blog.slug);
     if (success) {
-      alert("✅ Blog deleted successfully!");
-      onDelete(blog.slug); // ✅ Remove blog from UI after deleting
+      alert(" Blog deleted successfully!");
+      onDelete(blog.slug); //  Remove blog from UI after deleting
     } else {
-      alert("❌ Failed to delete blog.");
+      alert(" Failed to delete blog.");
     }
   };
 
   return (
     <div className="border p-4 rounded-lg shadow-lg bg-white flex justify-between items-center gap-4">
-      {/* Left: Blog Title & Description */}
+      {/* Left: Blog Title, Description, and Date */}
       <div className="flex-1">
         <h2 className="text-xl font-bold text-blue-600">
           <Link to={`/blog/${blog.slug}`} className="hover:underline">
@@ -32,6 +32,14 @@ const BlogCard = ({ blog, onDelete }) => {
         </h2>
         <p className="text-gray-500 text-sm mt-1">
           {blog.description || "No description available"}
+        </p>
+        <p className="text-gray-400 text-xs mt-1">
+          Published on:{" "}
+          {new Date(blog.createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </p>
       </div>
 

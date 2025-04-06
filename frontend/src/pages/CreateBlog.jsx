@@ -1,84 +1,3 @@
-// import React, { useState } from "react";
-// import { createBlog } from "../api";
-
-// const CreateBlog = () => {
-//   const [form, setForm] = useState({
-//     title: "",
-//     slug: "",
-//     description: "",
-//     content: "",
-//   });
-
-//   const handleChange = (e) => {
-//     setForm({ ...form, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     await createBlog(form);
-//     alert("Blog created successfully!");
-//     setForm({ title: "", slug: "", description: "", content: "" });
-//   };
-
-//   return (
-//     <div className="max-w-3xl mx-auto p-6">
-//       <h1 className="text-3xl font-bold mb-4">Create a New Blog</h1>
-//       <form onSubmit={handleSubmit} className="space-y-4">
-//         <input
-//           type="text"
-//           name="title"
-//           placeholder="Title"
-//           className="w-full p-2 border"
-//           onChange={handleChange}
-//           value={form.title}
-//           required
-//         />
-//         <input
-//           type="text"
-//           name="slug"
-//           placeholder="Slug (URL-friendly name)"
-//           className="w-full p-2 border"
-//           onChange={handleChange}
-//           value={form.slug}
-//           required
-//         />
-//         <input
-//           type="text"
-//           name="description"
-//           placeholder="Short description"
-//           className="w-full p-2 border"
-//           onChange={handleChange}
-//           value={form.description}
-//           required
-//         />
-//         <textarea
-//           name="content"
-//           placeholder="Write your blog in MDX format"
-//           className="w-full p-2 border"
-//           rows="5"
-//           onChange={handleChange}
-//           value={form.content}
-//           required
-//         ></textarea>
-//         <button type="submit" className="px-4 py-2 bg-blue-500 text-white">
-//           Submit
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default CreateBlog;
-
-
-
-
-
-
-
-
-
-
 import React, { useState } from "react";
 import { createBlog } from "../api";
 
@@ -87,11 +6,11 @@ const CreateBlog = () => {
     title: "",
     slug: "",
     description: "",
-    category: "", // ✅ Added category field
+    category: "",
     content: "",
   });
 
-  const categories = ["Operating System", "DSA", "Web Development", "Tech"]; // ✅ Defined categories
+  const categories = ["Operating System", "DSA", "Web Development", "Tech"];
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -99,15 +18,40 @@ const CreateBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createBlog(form);
-    alert("Blog created successfully!");
-    setForm({
-      title: "",
-      slug: "",
-      description: "",
-      category: "",
-      content: "",
-    });
+
+    // Format slug safely
+    const formattedSlug = form.slug
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
+
+    // Build frontmatter
+    const frontmatter =
+      `---\n` +
+      `title: ${form.title}\n` +
+      `slug: ${formattedSlug}\n` +
+      `description: ${form.description}\n` +
+      `category: ${form.category || "Others"}\n` +
+      `---\n\n`;
+
+    // Final markdown content to send
+    const markdownContent = frontmatter + form.content;
+
+    try {
+      await createBlog({ content: markdownContent });
+      alert(" Blog created successfully!");
+      setForm({
+        title: "",
+        slug: "",
+        description: "",
+        category: "",
+        content: "",
+      });
+    } catch (error) {
+      console.error("❌ Error creating blog:", error);
+      alert("Failed to create blog. Check the console for details.");
+    }
   };
 
   return (
@@ -141,8 +85,6 @@ const CreateBlog = () => {
           value={form.description}
           required
         />
-
-        {/* ✅ Category Dropdown */}
         <select
           name="category"
           className="w-full p-2 border"
@@ -159,19 +101,20 @@ const CreateBlog = () => {
             </option>
           ))}
         </select>
-
         <textarea
           name="content"
-          placeholder="Write your blog in MDX format"
+          placeholder="Write your blog content here (in Markdown/MDX)"
           className="w-full p-2 border"
-          rows="5"
+          rows="8"
           onChange={handleChange}
           value={form.content}
           required
         ></textarea>
-
-        <button type="submit" className="px-4 py-2 bg-blue-500 text-white">
-          Submit
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          Create Blog
         </button>
       </form>
     </div>
