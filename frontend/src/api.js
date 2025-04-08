@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5000/api"; 
+const API_BASE_URL = "http://34.131.13.247/api";
 
 //  Fetch all blogs
 export const fetchBlogs = async () => {

@@ -1,16 +1,19 @@
-import Blog from "../models/Blog.js";
-import matter from "gray-matter";
+// src/controllers/blogController.js
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const grayMatter = require("gray-matter");
 
-/**  Create a new blog */
+import Blog from "../models/Blog.js";
+
+/** Create a new blog */
 export const createBlog = async (req, res) => {
   try {
     const { content } = req.body;
-
     if (!content) {
       return res.status(400).json({ error: "MDX content is required" });
     }
 
-    const { data: frontmatter, content: mdxContent } = matter(content);
+    const { data: frontmatter, content: mdxContent } = grayMatter(content);
     const { title, slug, description, category } = frontmatter;
 
     if (!title || !slug || !description) {
@@ -51,11 +54,10 @@ export const createBlog = async (req, res) => {
   }
 };
 
-/**  Get all blogs */
+/** Get all blogs */
 export const getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
-
     const formatted = blogs.map((blog) => ({
       _id: blog._id,
       title: blog.title,
@@ -64,7 +66,6 @@ export const getAllBlogs = async (req, res) => {
       category: blog.category,
       createdAt: blog.createdAt,
     }));
-
     res.json(formatted);
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -72,16 +73,14 @@ export const getAllBlogs = async (req, res) => {
   }
 };
 
-/**  Get blog by slug */
+/** Get blog by slug */
 export const getBlogBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
     const blog = await Blog.findOne({ slug });
-
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
-
     res.json({
       _id: blog._id,
       slug: blog.slug,
@@ -96,18 +95,15 @@ export const getBlogBySlug = async (req, res) => {
   }
 };
 
-/**  Get blogs by category */
+/** Get blogs by category */
 export const getBlogsByCategory = async (req, res) => {
   try {
     const { category } = req.params;
-
-    let filter =
+    const filter =
       category === "Others"
         ? { $or: [{ category: { $exists: false } }, { category: "Others" }] }
         : { category };
-
     const blogs = await Blog.find(filter).sort({ createdAt: -1 });
-
     const formatted = blogs.map((blog) => ({
       _id: blog._id,
       title: blog.title,
@@ -116,13 +112,11 @@ export const getBlogsByCategory = async (req, res) => {
       category: blog.category,
       createdAt: blog.createdAt,
     }));
-
     if (!formatted.length) {
       return res
         .status(404)
         .json({ message: "No blogs found in this category" });
     }
-
     res.json(formatted);
   } catch (error) {
     console.error("Error fetching blogs by category:", error);
@@ -130,13 +124,11 @@ export const getBlogsByCategory = async (req, res) => {
   }
 };
 
-/**  Get categories */
+/** Get unique categories */
 export const getCategories = async (req, res) => {
   try {
     let categories = await Blog.distinct("category");
-    if (!categories.includes("Others")) {
-      categories.push("Others");
-    }
+    if (!categories.includes("Others")) categories.push("Others");
     res.json(categories);
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -144,21 +136,17 @@ export const getCategories = async (req, res) => {
   }
 };
 
-/**  Delete blog */
+/** Delete blog */
 export const deleteBlog = async (req, res) => {
   try {
     const { slug } = req.params;
     const blog = await Blog.findOneAndDelete({ slug });
-
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
-
     res.json({ message: "Blog deleted successfully" });
   } catch (error) {
     console.error("Error deleting blog:", error);
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
-
-
