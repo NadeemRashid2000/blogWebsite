@@ -3,9 +3,6 @@ import { useParams } from "react-router-dom";
 import BlogCard from "../components/BlogCard"; // ✅ Import BlogCard
 import { API_BASE_URL } from "../api.js";
 
-console.log(
-  `🌐 Fetching blogs from: ${API_BASE_URL}/blogs/category/${category}`
-);
 
 
 const CategoryBlogs = () => {
@@ -13,7 +10,9 @@ const CategoryBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  
+  console.log(`🌐 Fetching blogs from: ${API_BASE_URL}/blogs/category/${category}`);
+  
   useEffect(() => {
     setIsLoading(true);
     setError(null);
