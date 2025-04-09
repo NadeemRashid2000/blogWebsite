@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../api/blogApi"; //  Use shared base URL
+
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
@@ -11,7 +13,7 @@ const CategoriesPage = () => {
     setIsLoading(true);
     setError(null);
 
-    fetch("http://localhost:5000/api/blogs/categories")
+    fetch(`${API_BASE_URL}/blogs/categories`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch categories");
@@ -59,5 +61,3 @@ export default CategoriesPage;
 
 
 
-
-// ! https://chatgpt.com/c/67d105ae-0dc8-800c-9ce6-0e39d2126fdf

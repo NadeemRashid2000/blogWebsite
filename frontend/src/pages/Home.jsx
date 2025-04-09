@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BlogCard from "../components/BlogCard"; //  Import BlogCard
+import { API_BASE_URL } from "../api/blogApi";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
@@ -15,7 +16,7 @@ const Home = () => {
     setIsLoadingBlogs(true);
     setErrorBlogs(null);
 
-    fetch("http://localhost:5000/api/blogs")
+    fetch(`${API_BASE_URL}/blogs`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch blogs");
         return res.json();
@@ -36,7 +37,7 @@ const Home = () => {
     setIsLoadingCategories(true);
     setErrorCategories(null);
 
-    fetch("http://localhost:5000/api/blogs/categories")
+    fetch(`${API_BASE_URL}/blogs/categories`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch categories");
         return res.json();

@@ -6,6 +6,7 @@ import * as runtime from "react/jsx-runtime";
 import axios from "axios";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
+import { API_BASE_URL } from "../api/blogApi";
 
 // Custom Styling for MDX Components
 const components = {
@@ -51,7 +52,7 @@ const BlogDetails = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/blogs/slug/${slug}`
+          `${API_BASE_URL}/blogs/slug/${slug}`
         );
         if (!isMounted) return;
 

@@ -4,6 +4,7 @@ import * as runtime from "react/jsx-runtime";
 import { evaluate } from "@mdx-js/mdx";
 import rehypeHighlight from "rehype-highlight"; //  Enables syntax highlighting
 import remarkGfm from "remark-gfm"; //  Enables tables, footnotes, task lists, etc.
+import { API_BASE_URL } from "../api/blogApi"; //  Import base URL from shared config
 
 const components = {
   h1: (props) => (
@@ -33,9 +34,8 @@ const MDXRenderer = ({ slug }) => {
     try {
       console.log("🔍 Fetching Blog:", slug);
 
-      const response = await fetch(
-        `http://localhost:5000/api/blogs/slug/${slug}`
-      );
+      const response = await fetch(`${API_BASE_URL}/blogs/slug/${slug}`);
+
       if (!response.ok)
         throw new Error(`HTTP error! Status: ${response.status}`);
 

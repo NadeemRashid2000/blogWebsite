@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BlogCard from "../components/BlogCard"; // ✅ Import BlogCard
+import { API_BASE_URL } from "../api/blogApi";
 
 const CategoryBlogs = () => {
   const { category } = useParams();
@@ -12,7 +13,7 @@ const CategoryBlogs = () => {
     setIsLoading(true);
     setError(null);
 
-    fetch(`http://localhost:5000/api/blogs/category/${category}`)
+    fetch(`${API_BASE_URL}/blogs/category/${category}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Failed to fetch blogs: ${res.statusText}`);
