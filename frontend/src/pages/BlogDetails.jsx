@@ -8,6 +8,9 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import { API_BASE_URL } from "../api.js";
 
+console.log("🧠 BlogDetails is using API_BASE_URL:", API_BASE_URL);
+
+
 // Custom Styling for MDX Components
 const components = {
   h1: (props) => (
@@ -54,6 +57,8 @@ const BlogDetails = () => {
         const response = await axios.get(
           `${API_BASE_URL}/blogs/slug/${slug}`
         );
+        console.log("📦 Blog data response:", response.data);
+
         if (!isMounted) return;
 
         const { title, description, category, published, createdAt, content } =

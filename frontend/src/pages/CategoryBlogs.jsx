@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import BlogCard from "../components/BlogCard"; // ✅ Import BlogCard
 import { API_BASE_URL } from "../api.js";
 
+console.log(
+  `🌐 Fetching blogs from: ${API_BASE_URL}/blogs/category/${category}`
+);
+
+
 const CategoryBlogs = () => {
   const { category } = useParams();
   const [blogs, setBlogs] = useState([]);

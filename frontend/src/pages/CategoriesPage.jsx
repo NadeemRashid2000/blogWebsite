@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../api.js";
+console.log("📡 CategoriesPage using API_BASE_URL:", API_BASE_URL);
 
 
 const CategoriesPage = () => {

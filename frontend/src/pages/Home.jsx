@@ -15,7 +15,7 @@ const Home = () => {
   useEffect(() => {
     setIsLoadingBlogs(true);
     setErrorBlogs(null);
-
+      console.log("📡 Fetching blogs from:", `${API_BASE_URL}/blogs`);
     fetch(`${API_BASE_URL}/blogs`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch blogs");

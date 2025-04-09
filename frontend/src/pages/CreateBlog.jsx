@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createBlog } from "../api";
+import { createBlog } from "../api.js";
 
 const CreateBlog = () => {
   const [form, setForm] = useState({
@@ -37,6 +37,9 @@ const CreateBlog = () => {
 
     // Final markdown content to send
     const markdownContent = frontmatter + form.content;
+    console.log("📝 Form data before submit:", form);
+    console.log("🔗 Formatted slug:", formattedSlug);
+    console.log("📄 Final MDX content to send:\n", markdownContent);
 
     try {
       await createBlog({ content: markdownContent });
