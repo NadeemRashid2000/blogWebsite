@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://34.131.13.247/api";
+export const API_BASE_URL = "http://34.131.13.247/api";
 
 console.log(" API_BASE_URL in use:", API_BASE_URL);  // 🔍 Debug log
 
