@@ -6,7 +6,7 @@ import * as runtime from "react/jsx-runtime";
 import axios from "axios";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
-import { API_BASE_URL } from "../pages/api";
+import { API_BASE_URL } from "../api.js";
 
 // Custom Styling for MDX Components
 const components = {

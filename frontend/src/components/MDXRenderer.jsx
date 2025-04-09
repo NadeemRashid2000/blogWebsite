@@ -4,7 +4,7 @@ import * as runtime from "react/jsx-runtime";
 import { evaluate } from "@mdx-js/mdx";
 import rehypeHighlight from "rehype-highlight"; //  Enables syntax highlighting
 import remarkGfm from "remark-gfm"; //  Enables tables, footnotes, task lists, etc.
-import { API_BASE_URL } from "../../pages/api";
+import { API_BASE_URL } from "../api.js";
 
 const components = {
   h1: (props) => (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BlogCard from "../components/BlogCard"; //  Import BlogCard
-import { API_BASE_URL } from "../pages/api";
+import { API_BASE_URL } from "../api.js";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
