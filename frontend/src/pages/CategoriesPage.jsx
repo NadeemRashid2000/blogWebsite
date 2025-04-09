@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { API_BASE_URL } from "../api/blogApi"; //  Use shared base URL
+import { API_BASE_URL } from "./api"; //  Use shared base URL
 
 
 const CategoriesPage = () => {

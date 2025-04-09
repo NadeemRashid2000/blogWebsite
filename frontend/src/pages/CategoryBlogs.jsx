@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BlogCard from "../components/BlogCard"; // ✅ Import BlogCard
-import { API_BASE_URL } from "../api/blogApi";
+import { API_BASE_URL } from "./api";
 
 const CategoryBlogs = () => {
   const { category } = useParams();
