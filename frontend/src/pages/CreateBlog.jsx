@@ -52,7 +52,7 @@ const CreateBlog = () => {
         content: "",
       });
     } catch (error) {
-      console.error("❌ Error creating blog:", error);
+      console.error(" Error creating blog:", error);
       alert("Failed to create blog. Check the console for details.");
     }
   };
