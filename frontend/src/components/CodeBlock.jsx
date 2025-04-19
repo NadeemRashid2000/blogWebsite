@@ -5,7 +5,7 @@ import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const CodeBlock = ({ children, className = "" }) => {
   const match = /language-(\w+)/.exec(className || "");
-  const language = match ? match[1] : "javascript"; // Default to JS
+  const language = match ? match[1] : "javascript"; 
 
   return (
     <SyntaxHighlighter

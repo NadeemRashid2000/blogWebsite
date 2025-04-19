@@ -1,64 +1,25 @@
+import React from "react";
 
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { API_BASE_URL } from "../api.js";
-console.log("📡 CategoriesPage using API_BASE_URL:", API_BASE_URL);
-
+const categories = ["Others", "OS", "DSA", "Web development", "Tech"];
 
 const CategoriesPage = () => {
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-
-    fetch(`${API_BASE_URL}/blogs/categories`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setCategories(data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("❌ Error fetching categories:", err);
-        setError("Failed to load categories. Please try again later.");
-        setIsLoading(false);
-      });
-  }, []);
-
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-4">Blog Categories</h1>
-
-      {isLoading && <p className="text-gray-500">Loading categories...</p>}
-      {error && <p className="text-red-500">{error}</p>}
-
-      {!isLoading && categories.length === 0 && !error && (
-        <p className="text-gray-600">No categories found.</p>
-      )}
-
-      {categories.length > 0 && (
-        <div className="space-y-3">
-          {categories.map((category) => (
-            <h2 key={category} className="text-2xl font-semibold text-blue-600">
-              <Link to={`/category/${category}`} className="hover:underline">
-                {category}
-              </Link>
-            </h2>
-          ))}
-        </div>
-      )}
+    <div className="max-w-4xl mx-auto px-6 py-12">
+      <h2 className="text-3xl font-bold mb-6 text-violet-700 text-center">
+        Browse Categories
+      </h2>
+      <ul className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-items-center">
+        {categories.map((category) => (
+          <li
+            key={category}
+            className="bg-violet-100 text-violet-700 px-6 py-3 rounded-full font-medium hover:bg-violet-200 cursor-pointer"
+          >
+            {category}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
 export default CategoriesPage;
-
-
-

@@ -1,4 +1,3 @@
-// src/controllers/blogController.js
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const grayMatter = require("gray-matter");
@@ -41,6 +40,7 @@ export const createBlog = async (req, res) => {
       description,
       category: categoryToSave,
       content: mdxContent,
+      user: req.user._id, //  Associate blog with user
     });
 
     res
@@ -124,11 +124,19 @@ export const getBlogsByCategory = async (req, res) => {
   }
 };
 
-/** Get unique categories */
 export const getCategories = async (req, res) => {
   try {
     let categories = await Blog.distinct("category");
-    if (!categories.includes("Others")) categories.push("Others");
+
+    // Check if there are any blogs without category or with "Others"
+    const othersExist = await Blog.exists({
+      $or: [{ category: { $exists: false } }, { category: "Others" }],
+    });
+
+    if (othersExist && !categories.includes("Others")) {
+      categories.push("Others");
+    }
+
     res.json(categories);
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -139,11 +147,24 @@ export const getCategories = async (req, res) => {
 /** Delete blog */
 export const deleteBlog = async (req, res) => {
   try {
-    const { slug } = req.params;
-    const blog = await Blog.findOneAndDelete({ slug });
+    const { slug } = req.params; // Change to slug
+    const blog = await Blog.findOne({ slug }); // Find by slug
+
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
+
+    // Only allow admin deletion
+    if (
+      blog.user?.toString() !== req.user._id.toString() && // Use req.user._id
+      req.user.role !== "admin"
+    ) {
+      return res
+        .status(403)
+        .json({ message: "Unauthorized to delete this blog" });
+    }
+
+    await blog.deleteOne();
     res.json({ message: "Blog deleted successfully" });
   } catch (error) {
     console.error("Error deleting blog:", error);

@@ -1,21 +1,44 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext"; // Import the custom hook
 
 const Header = () => {
-  return (
-    <header className="bg-violet-500 text-white p-5 flex items-center justify-between">
-      <Link to="/" className="text-xl font-semibold">
-        My Blog
-      </Link>
+  const { user, logout } = useUser(); // Use the custom hook to get user and logout
+  const navigate = useNavigate();
 
-      <nav className="space-x-4">
-        <Link
-          className="px-4 py-2 bg-blue-600 rounded-full hover:bg-gray-700"
-          to="/about"
-        >
-          About
+  const handleLogout = () => {
+    logout(); // Call the logout function from the context
+    navigate("/"); // Redirect to homepage after logout
+  };
+
+  return (
+    <header className="bg-purple-500 text-white py-4">
+      {/* <div className="container mx-auto flex justify-between items-center"> */}
+      <div className="w-full px-4 flex justify-between items-center">
+        <Link to="/" className="text-3xl font-bold">
+          My Blog
         </Link>
-      </nav>
+        <nav className="flex items-center">
+          <Link to="/about" className="mr-4">
+            About
+          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Login
+            </Link>
+          )}
+        </nav>
+      </div>
     </header>
   );
 };

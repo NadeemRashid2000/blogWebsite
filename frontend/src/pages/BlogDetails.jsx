@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { evaluate } from "@mdx-js/mdx";
 import { MDXProvider } from "@mdx-js/react";
 import * as runtime from "react/jsx-runtime";
@@ -7,9 +7,7 @@ import axios from "axios";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import { API_BASE_URL } from "../api.js";
-
-console.log("🧠 BlogDetails is using API_BASE_URL:", API_BASE_URL);
-
+import { useUser } from "../UserContext.jsx";
 
 // Custom Styling for MDX Components
 const components = {
@@ -41,12 +39,15 @@ const components = {
   a: (props) => <a className="text-blue-500 hover:underline" {...props} />,
 };
 
-const BlogDetails = () => {
+const BlogDetails = ({ onBlogDeleted }) => {
+  // Receive onBlogDeleted prop
   const { slug } = useParams();
   const [blog, setBlog] = useState(null);
   const [error, setError] = useState(null);
   const [CompiledMDX, setCompiledMDX] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let isMounted = true;
@@ -54,22 +55,20 @@ const BlogDetails = () => {
     const loadBlogData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `${API_BASE_URL}/blogs/slug/${slug}`
-        );
-        console.log("📦 Blog data response:", response.data);
-
+        const response = await axios.get(`${API_BASE_URL}/blogs/slug/${slug}`);
         if (!isMounted) return;
 
-        const { title, description, category, published, createdAt, content } =
+        const { title, description, category, published, content } =
           response.data;
 
-        setBlog({
+        const formattedBlog = {
           title: title || "No Title Found",
           description: description || "No description available",
           category: category || "Uncategorized",
-          published: published || createdAt || null,
-        });
+          published: published || null,
+        };
+
+        setBlog(formattedBlog);
 
         const compiled = await evaluate(content, {
           ...runtime,
@@ -107,11 +106,42 @@ const BlogDetails = () => {
     });
   };
 
-  if (loading)
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this blog?"
+    );
+    if (!confirmed) return;
+
+    try {
+      await axios.delete(`${API_BASE_URL}/blogs/slug/${slug}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      alert("Blog deleted successfully!");
+      onBlogDeleted(); // Call the callback function
+      navigate("/");
+    } catch (error) {
+      console.error("❌ Error deleting blog:", error);
+      if (error.response && error.response.status === 403) {
+        setError("Forbidden: You don't have permission to delete this blog.");
+      } else {
+        setError("Failed to delete blog. Check the console for details.");
+      }
+    }
+  };
+
+  if (loading) {
     return <p className="text-gray-500 text-center mt-6">Loading...</p>;
-  if (error) return <p className="text-red-500 text-center mt-6">{error}</p>;
-  if (!blog)
+  }
+
+  if (error) {
+    return <p className="text-red-500 text-center mt-6">{error}</p>;
+  }
+
+  if (!blog) {
     return <p className="text-gray-500 text-center mt-6">No blog found.</p>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-12 bg-gray-100">
@@ -122,18 +152,31 @@ const BlogDetails = () => {
         <p className="text-gray-500 text-sm text-center">
           <strong>Published on:</strong> {formatDate(blog.published)}
         </p>
+        <p className="text-sm text-blue-600 text-center mt-1">
+          <strong>Category:</strong> {blog.category}
+        </p>
         <p className="text-lg text-gray-700 mt-2 text-center">
           <strong>Description:</strong> {blog.description}
         </p>
 
+        {user?.role === "admin" && (
+          <div className="flex justify-center">
+            {/* <button
+              onClick={handleDelete}
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+            >
+              Delete Blog
+            </button> */}
+          </div>
+        )}
         <div className="prose lg:prose-lg mt-8 text-gray-900 leading-relaxed">
           {CompiledMDX ? (
             <MDXProvider components={components}>
               <CompiledMDX />
             </MDXProvider>
           ) : (
-            <p className="text-gray-500 text-center">
-              Rendering blog content...
+            <p className="text-gray-400 italic text-center">
+              Loading content...
             </p>
           )}
         </div>
@@ -143,4 +186,3 @@ const BlogDetails = () => {
 };
 
 export default BlogDetails;
-

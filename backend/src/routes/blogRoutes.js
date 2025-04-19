@@ -1,5 +1,3 @@
-//! Number 4: Define api endpoints
-
 import express from "express";
 import {
   getAllBlogs,
@@ -9,17 +7,18 @@ import {
   getCategories,
   deleteBlog,
 } from "../controllers/blogController.js";
+import { verifyToken, isAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-//  Define API routes
+// Public routes
 router.get("/", getAllBlogs);
 router.get("/slug/:slug", getBlogBySlug);
-router.post("/", createBlog);
 router.get("/category/:category", getBlogsByCategory);
 router.get("/categories", getCategories);
-router.delete("/slug/:slug", deleteBlog);
+
+// Protected routes (admin only)
+router.post("/", verifyToken, isAdmin, createBlog); // ✅ Fixed
+router.delete("/slug/:slug", verifyToken, isAdmin, deleteBlog); // ✅ Fixed
 
 export default router;
-
-//TODO: middleware
