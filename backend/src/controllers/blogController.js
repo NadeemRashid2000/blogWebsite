@@ -1,6 +1,5 @@
 import grayMatter from "gray-matter";
 import Blog from "../models/Blog.js";
-import Blog from "../models/Blog.js";
 
 /** Create a new blog */
 export const createBlog = async (req, res) => {
