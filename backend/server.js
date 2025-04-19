@@ -11,7 +11,7 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 
-// Connect to MongoDB
+// Connect to MongoD
 connectDB();
 
 // Middleware to parse JSON and enable CORS
