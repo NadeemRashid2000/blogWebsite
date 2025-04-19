@@ -18,12 +18,12 @@ const Home = () => {
   const fetchBlogs = async () => {
     setIsLoadingBlogs(true);
     setErrorBlogs(null);
-    console.log("📡 Fetching blogs from:", `${API_BASE_URL}/blogs`);
+    // console.log("📡 Fetching blogs from:", `${API_BASE_URL}/blogs`);
     try {
       const response = await axios.get(`${API_BASE_URL}/blogs`); // Use axios
       setBlogs(response.data);
     } catch (err) {
-      console.error(" Error fetching blogs:", err);
+      // console.error(" Error fetching blogs:", err);
       setErrorBlogs("Failed to load blogs. Please try again later.");
     } finally {
       setIsLoadingBlogs(false);
@@ -64,11 +64,11 @@ const Home = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(`Blog with slug ${slug} deleted from backend`);
+      // console.log(`Blog with slug ${slug} deleted from backend`);
 
       // Update the frontend state
       setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.slug !== slug));
-      console.log(`Blog with slug ${slug} deleted from frontend state`);
+      // console.log(`Blog with slug ${slug} deleted from frontend state`);
     } catch (error) {
       console.error("Error deleting blog:", error);
       setErrorBlogs("Failed to delete blog.");

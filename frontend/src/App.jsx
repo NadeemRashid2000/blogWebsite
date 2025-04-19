@@ -27,10 +27,9 @@ function App() {
                 element={<CategoryBlogs />}
               />
               <Route path="/about" element={<About />} />{" "}
-              {/* Add About Route */}
             </Routes>
           </main>
-          <Footer /> {/* Include Footer */}
+          <Footer /> 
         </div>
       </Router>
     </UserProvider>

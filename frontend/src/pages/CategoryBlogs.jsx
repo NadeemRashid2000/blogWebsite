@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { API_BASE_URL } from "../api.js"; // Adjust the path if needed.  You may not have this file.
+import { API_BASE_URL } from "../api.js"; 
 import axios from "axios";
-import BlogCard from "../components/BlogCard.jsx"; // Assuming you have this component
-import { UserContext } from "../UserContext.jsx"; // Import UserContext
-
+import BlogCard from "../components/BlogCard.jsx"; 
+import { UserContext } from "../UserContext.jsx"; 
 const CategoryBlogs = () => {
   const { categoryName } = useParams();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useContext(UserContext); // Use the UserContext to get user info
+  const { user } = useContext(UserContext); 
 
   useEffect(() => {
     const fetchBlogsByCategory = async () => {
@@ -20,7 +19,7 @@ const CategoryBlogs = () => {
         return;
       }
       try {
-        console.log("Fetching blogs for category:", categoryName);
+        // console.log("Fetching blogs for category:", categoryName);
         const response = await axios.get(
           `${API_BASE_URL}/blogs/category/${categoryName}`
         );
@@ -54,15 +53,15 @@ const CategoryBlogs = () => {
           Authorization: `Bearer ${user.token}`, // Use the user's token from context
         },
       });
-      console.log(`Blog with slug ${slug} deleted from backend`);
+      // console.log(`Blog with slug ${slug} deleted from backend`);
 
       // Update the frontend state
       setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.slug !== slug));
       // console.log(`Blog with slug ${slug} deleted from frontend state`);
-      console.log(`Blog with slug ${slug} deleted and frontend is updated`);
+      // console.log(`Blog with slug ${slug} deleted and frontend is updated`);
     } catch (error) {
       console.error("Error deleting blog:", error);
-      setError("Failed to delete blog."); // set the error message.
+      setError("Failed to delete blog."); 
     }
   };
 

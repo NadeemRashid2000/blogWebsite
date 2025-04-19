@@ -24,11 +24,11 @@ const About = () => {
       {/* Key Features */}
       <div className="mt-8 text-left max-w-3xl">
         <h2 className="text-xl font-semibold text-gray-800 text-center mb-4">
-          🌟 Key Features:
+           Key Features:
         </h2>
         <ul className="list-disc list-inside text-gray-700 space-y-3">
           <li>
-            👉 <strong>User-Friendly Interface</strong> – Clean and simple
+             <strong>User-Friendly Interface</strong> – Clean and simple
             design.
           </li>
         </ul>

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext"; // Import the custom hook
+import { useUser } from "../UserContext"; 
 
 const Header = () => {
-  const { user, logout } = useUser(); // Use the custom hook to get user and logout
+  const { user, logout } = useUser(); 
   const navigate = useNavigate();
 
   const handleLogout = () => {

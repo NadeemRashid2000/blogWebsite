@@ -1,8 +1,7 @@
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// export const API_BASE_URL = "http://34.131.13.247/api";
 
-console.log(" API_BASE_URL in use:", API_BASE_URL);  // 🔍 Debug log
+// console.log(" API_BASE_URL in use:", API_BASE_URL);  //  Debug log
 
 //  Fetch all blogs
 export const fetchBlogs = async () => {
@@ -31,7 +30,7 @@ export const fetchBlogBySlug = async (slug) => {
 //  Create a blog (no frontmatter required)
 export const createBlog = async (blogData) => {
   try {
-    console.log("📤 Sending blog data:", blogData);
+    console.log("Sending blog data:", blogData);
 
     const response = await fetch(`${API_BASE_URL}/blogs`, {
       method: "POST",
@@ -41,7 +40,7 @@ export const createBlog = async (blogData) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("❌ Backend response:", errorText);
+      console.error("Backend response:", errorText);
       throw new Error("Failed to create blog");
     }
 

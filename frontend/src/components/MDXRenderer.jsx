@@ -32,7 +32,7 @@ const MDXRenderer = ({ slug }) => {
 
   const fetchMDX = useCallback(async () => {
     try {
-      console.log("🔍 Fetching Blog:", slug);
+      // console.log(" Fetching Blog:", slug);
 
       const response = await fetch(`${API_BASE_URL}/blogs/slug/${slug}`);
 
@@ -40,7 +40,7 @@ const MDXRenderer = ({ slug }) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
 
       const data = await response.json();
-      console.log(" Fetched Blog Data:", data);
+      // console.log(" Fetched Blog Data:", data);
 
       setMetadata({
         title: data.title || "Untitled",
@@ -50,21 +50,21 @@ const MDXRenderer = ({ slug }) => {
           : "Unknown Date",
       });
 
-      console.log("📜 Raw MDX Content:", data.content);
+      // console.log(" Raw MDX Content:", data.content);
 
       const cleanedContent = data.content ? data.content.trim() : "";
 
-      console.log("🚀 Final MDX Content Before Compilation:", cleanedContent);
+      // console.log(" Final MDX Content Before Compilation:", cleanedContent);
 
       const compiled = await evaluate(cleanedContent, {
         ...runtime,
         outputFormat: "function",
         rehypePlugins: [rehypeHighlight],
         remarkPlugins: [remarkGfm],
-        providerImportSource: "@mdx-js/react", // ✅ Fix for MDX imports
+        providerImportSource: "@mdx-js/react", //  Fix for MDX imports
       });
 
-      console.log(" Compiled MDX Content:", compiled);
+      // console.log(" Compiled MDX Content:", compiled);
 
       if (typeof compiled.default === "function") {
         setMDXContent(() => compiled.default);

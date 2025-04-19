@@ -1,7 +1,5 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const grayMatter = require("gray-matter");
-
+import grayMatter from "gray-matter";
+import Blog from "../models/Blog.js";
 import Blog from "../models/Blog.js";
 
 /** Create a new blog */

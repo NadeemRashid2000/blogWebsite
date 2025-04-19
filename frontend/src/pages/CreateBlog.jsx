@@ -40,15 +40,15 @@ category: ${category || "Others"}
 
 ${content}`;
 
-    console.log("📝 Form data before submit:", {
-      title,
-      slug,
-      description,
-      category,
-      content,
-    });
-    console.log("🔗 Formatted slug:", formattedSlug);
-    console.log("📄 Final MDX content to send:\n", markdownContent);
+    // console.log(" Form data before submit:", {
+    //   title,
+    //   slug,
+    //   description,
+    //   category,
+    //   content,
+    // });
+    // console.log(" Formatted slug:", formattedSlug);
+    // console.log(" Final MDX content to send:\n", markdownContent);
 
     try {
       const response = await axios.post(
@@ -83,7 +83,7 @@ ${content}`;
         );
       }
     } catch (error) {
-      console.error("Error creating blog:", error);
+      // console.error("Error creating blog:", error);
       setError(`Failed to create blog: ${error.message}`);
     } finally {
       setLoading(false);

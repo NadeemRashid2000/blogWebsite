@@ -18,7 +18,7 @@ router.get("/category/:category", getBlogsByCategory);
 router.get("/categories", getCategories);
 
 // Protected routes (admin only)
-router.post("/", verifyToken, isAdmin, createBlog); // ✅ Fixed
-router.delete("/slug/:slug", verifyToken, isAdmin, deleteBlog); // ✅ Fixed
+router.post("/", verifyToken, isAdmin, createBlog); 
+router.delete("/slug/:slug", verifyToken, isAdmin, deleteBlog); 
 
 export default router;

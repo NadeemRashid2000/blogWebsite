@@ -122,7 +122,7 @@ const BlogDetails = ({ onBlogDeleted }) => {
       onBlogDeleted(); // Call the callback function
       navigate("/");
     } catch (error) {
-      console.error("❌ Error deleting blog:", error);
+      // console.error(" Error deleting blog:", error);
       if (error.response && error.response.status === 403) {
         setError("Forbidden: You don't have permission to delete this blog.");
       } else {
