@@ -11,7 +11,7 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 
-// Connect to MongoD
+// Connect to MongoDB
 connectDB();
 
 // Middleware to parse JSON and enable CORS
@@ -28,12 +28,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
+// console.log("Mongo URI in use:", process.env.MONGO_URI);
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server is running on http://0.0.0.0:${PORT}`);
+  // console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });
-
-
-
-

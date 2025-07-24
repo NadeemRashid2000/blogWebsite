@@ -11,7 +11,7 @@ const createAdmin = async () => {
     const existingAdmin = await User.findOne({ username: "admin" });
 
     if (existingAdmin) {
-      console.log("Admin user already exists.");
+      // console.log("Admin user already exists.");
     } else {
       const hashedPassword = await bcrypt.hash("admin123", 10); // Hash the admin password
 
@@ -22,7 +22,7 @@ const createAdmin = async () => {
       });
 
       await newAdmin.save();
-      console.log("Admin user created.");
+      // console.log("Admin user created.");
     }
 
     mongoose.connection.close();

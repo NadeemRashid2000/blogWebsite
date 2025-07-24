@@ -1,5 +1,3 @@
-//! Number 5: handles errors 
-
 const errorHandler = (err, req, res, next) => {
   console.error(`Error: ${err.message}`.red.underline);
 
@@ -10,5 +8,3 @@ const errorHandler = (err, req, res, next) => {
 };
 
 export { errorHandler };
-
-// Todo: server > intialise express > load routes > start server

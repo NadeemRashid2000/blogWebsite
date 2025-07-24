@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext.jsx";
-import { API_BASE_URL } from "../api.js";
-import axios from "axios";
+import { createBlogWithAuth } from "../api.js";
+import MDEditor from "@uiw/react-md-editor";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
 
 const CreateBlog = () => {
   const { user } = useUser();
   const navigate = useNavigate();
+
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
@@ -14,16 +17,33 @@ const CreateBlog = () => {
   const [content, setContent] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const categories = ["Others", "OS", "DSA", "Web Development", "Tech"];
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const containsRawHTML = (text) => /<[^>]+>/.test(text);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    if (!title.trim() || !slug.trim() || !description.trim()) {
+      setError("Please fill all required fields.");
+      setLoading(false);
+      return;
+    }
+
+    // if (!content.trim()) {
+    //   setError("Blog content cannot be empty.");
+    //   setLoading(false);
+    //   return;
+    // }
+
+    // if (containsRawHTML(content)) {
+    //   setError("Please remove any raw HTML tags (like <div>) from the content.");
+    //   setLoading(false);
+    //   return;
+    // }
 
     const formattedSlug = slug
       .trim()
@@ -38,21 +58,12 @@ description: ${description}
 category: ${category || "Others"}
 ---
 
-${content}`;
+${content.trim() || "*No content provided*"}`;
 
-    // console.log(" Form data before submit:", {
-    //   title,
-    //   slug,
-    //   description,
-    //   category,
-    //   content,
-    // });
-    // console.log(" Formatted slug:", formattedSlug);
-    // console.log(" Final MDX content to send:\n", markdownContent);
+    // console.log("Final MDX content to send:\n", markdownContent);
 
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/blogs`,
+      const result = await createBlogWithAuth(
         {
           title,
           slug: formattedSlug,
@@ -60,30 +71,22 @@ ${content}`;
           category,
           content: markdownContent,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.token}`,
-          },
-        }
+        user?.token
       );
 
-      if (response.status >= 200 && response.status < 300) {
+      if (result) {
         alert("Blog created successfully!");
         navigate("/");
         setTitle("");
         setSlug("");
         setDescription("");
-        setCategory("Tech");
+        setCategory("Others");
         setContent("");
       } else {
-        const errorData = response.data || { message: "Unknown server error" };
-        throw new Error(
-          `Server error: ${response.status} - ${JSON.stringify(errorData)}`
-        );
+        throw new Error("Blog creation returned null");
       }
     } catch (error) {
-      // console.error("Error creating blog:", error);
+      console.error("Error creating blog:", error);
       setError(`Failed to create blog: ${error.message}`);
     } finally {
       setLoading(false);
@@ -137,16 +140,18 @@ ${content}`;
             </option>
           ))}
         </select>
-        <textarea
-          name="content"
-          placeholder="Write your blog content here (in Markdown/MDX)"
-          className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          rows="8"
-          onChange={(e) => setContent(e.target.value)}
-          value={content}
-          required
-        ></textarea>
+
+        <div data-color-mode="dark">
+          <MDEditor
+            height={400}
+            value={content}
+            onChange={(val) => setContent(val ?? "")}
+            preview="edit"
+          />
+        </div>
+
         {error && <p className="text-red-500">{error}</p>}
+
         <button
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
@@ -160,3 +165,13 @@ ${content}`;
 };
 
 export default CreateBlog;
+
+
+
+
+
+
+
+
+
+

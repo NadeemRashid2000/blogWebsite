@@ -9,7 +9,7 @@ const blogSchema = new mongoose.Schema(
     content: { type: String, required: true },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // This enables population of user data
+      ref: "User", //  This enables population of user data
       required: true,
     },
   },

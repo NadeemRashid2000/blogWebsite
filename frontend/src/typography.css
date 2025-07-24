@@ -1,0 +1,27 @@
+.prose table {
+  border-collapse: collapse;  /* Collapse table borders */
+  width: 100%;  /* Full width table */
+  border: 2px solid ;  /* Border around the table */
+}
+
+.prose th, .prose td {
+  border: 1px solid ;  /* Border for table cells */
+  padding: 0.5rem 1rem;  /* Padding for cells */
+  text-align: center;  /* Center align text */
+}
+
+.prose thead {
+  background-color: #f7fafc;  /* Light background for the header */
+}
+
+.prose tbody tr:nth-child(odd) {
+  background-color: #f9fafb;  /* Alternating row color (odd) */
+}
+
+.prose tbody tr:hover {
+  background-color: #e2e8f0;  /* Hover effect for rows */
+}
+
+.prose td {
+  padding: 0.5rem;  /* Padding for table cells */
+}

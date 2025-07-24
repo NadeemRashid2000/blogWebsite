@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { API_BASE_URL } from "../api.js"; 
+import { API_BASE_URL } from "../api.js";
 import axios from "axios";
-import BlogCard from "../components/BlogCard.jsx"; 
-import { UserContext } from "../UserContext.jsx"; 
+import BlogCard from "../components/BlogCard.jsx";
+import { UserContext } from "../UserContext.jsx";
+
 const CategoryBlogs = () => {
   const { categoryName } = useParams();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useContext(UserContext); 
+  const { user } = useContext(UserContext); // Use the UserContext to get user info
 
   useEffect(() => {
     const fetchBlogsByCategory = async () => {
@@ -19,7 +20,7 @@ const CategoryBlogs = () => {
         return;
       }
       try {
-        // console.log("Fetching blogs for category:", categoryName);
+        console.log("Fetching blogs for category:", categoryName);
         const response = await axios.get(
           `${API_BASE_URL}/blogs/category/${categoryName}`
         );
@@ -53,15 +54,15 @@ const CategoryBlogs = () => {
           Authorization: `Bearer ${user.token}`, // Use the user's token from context
         },
       });
-      // console.log(`Blog with slug ${slug} deleted from backend`);
+      console.log(`Blog with slug ${slug} deleted from backend`);
 
       // Update the frontend state
       setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.slug !== slug));
       // console.log(`Blog with slug ${slug} deleted from frontend state`);
-      // console.log(`Blog with slug ${slug} deleted and frontend is updated`);
+      console.log(`Blog with slug ${slug} deleted and frontend is updated`);
     } catch (error) {
       console.error("Error deleting blog:", error);
-      setError("Failed to delete blog."); 
+      setError("Failed to delete blog."); // set the error message.
     }
   };
 
@@ -77,22 +78,27 @@ const CategoryBlogs = () => {
     return <div>No blogs found for the category: {categoryName}</div>;
   }
 
+
+
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold text-violet-700 mb-6 text-center">
+    <div className="w-auto h-screen mx-auto px-6 py-12 bg-zinc-500 ">
+      <h1 className="text-4xl font-bold text-black mb-6 text-center">
         Blogs in {categoryName}
       </h1>
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         {blogs.map((blog) => (
           <BlogCard
             key={blog._id}
             blog={blog}
-            onDelete={user?.role === "admin" ? handleDeleteBlog : undefined} // Pass handleDeleteBlog only if admin
+            onDelete={user?.role === "admin" ? handleDeleteBlog : undefined}
           />
         ))}
       </div>
     </div>
   );
+
 };
 
 export default CategoryBlogs;
+
+

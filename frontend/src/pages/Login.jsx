@@ -1,34 +1,27 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext"; // Import the custom hook
-import { API_BASE_URL } from "../api";
+import { useUser } from "../UserContext";
+import { loginUser } from "../api"; //  Only import loginUser now
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useUser(); // Use the custom hook to get the login function
+  const { login } = useUser();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
-      if (response.ok && data.token) {
-        login(data.token); // Use the login function from the context
-        navigate("/"); // Redirect to homepage after login
+      const data = await loginUser(username, password); //  Using central function
+      if (data.token) {
+        login(data.token);         // Store in context
+        navigate("/");             // Redirect after login
       } else {
         alert(data.message || "Login failed");
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Failed to connect to the server");
+      alert(error.message);       // Show full message from api.js
     }
   };
 
@@ -42,10 +35,7 @@ const Login = () => {
           </h1>
           <form onSubmit={handleSubmit} className="mt-6">
             <div>
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="username"
-              >
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                 Username:
               </label>
               <input
@@ -58,10 +48,7 @@ const Login = () => {
               />
             </div>
             <div className="mt-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="password"
-              >
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                 Password:
               </label>
               <input
@@ -89,3 +76,4 @@ const Login = () => {
 };
 
 export default Login;
+

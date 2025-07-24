@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "poststart": "node src/scripts/createAdmin.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,6 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.11.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.10"
   }
 }
