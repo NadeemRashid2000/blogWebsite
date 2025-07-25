@@ -117,13 +117,15 @@ This project was created using the following technologies:
 
  ##  Screenshots 
 
+ ### Home Page
  ![Screenshot 1](https://github.com/user-attachments/assets/2c86ed45-d2e5-4687-bd33-d633d11b6087)
 
 ---
-
+ ### Blog Page
 ![Screenshot 2](https://github.com/user-attachments/assets/40542bca-5eca-4342-bf23-25642ed9965e)
 
 ---
+### Create Blog With Editor
 ![Screenshot 3](https://github.com/user-attachments/assets/edfb833c-4b3f-4fcd-9ed1-590e3cee6a0a)
 
 
