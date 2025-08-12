@@ -45,11 +45,20 @@ const CreateBlog = () => {
     //   return;
     // }
 
-    const formattedSlug = slug
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "");
+//     const formattedSlug = slug
+//       .trim()
+//       .toLowerCase()
+//       .replace(/\s+/g, "-")
+//       .replace(/[^a-z0-9-]/g, "");
+
+//     const markdownContent = `---
+// title: ${title}
+// slug: ${formattedSlug}
+// description: ${description}
+// category: ${category || "Others"}
+// ---
+
+// ${content.trim() || "*No content provided*"}`;
 
     const markdownContent = `---
 title: ${title}
@@ -58,7 +67,14 @@ description: ${description}
 category: ${category || "Others"}
 ---
 
-${content.trim() || "*No content provided*"}`;
+# ${title}
+
+> _${description}_  
+> Category: **${category}**
+
+${content.trim() || "*No content provided*"}
+`;
+
 
     // console.log("Final MDX content to send:\n", markdownContent);
 

@@ -1,3 +1,4 @@
+// ! updating Version
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { evaluate } from "@mdx-js/mdx";
@@ -35,7 +36,7 @@ export default function BlogDetails({ onBlogDeleted }) {
           title: data.title || "No Title",
           description: data.description || "",
           category: data.category || "Uncategorized",
-          published: data.published || null,
+          published: data.createdAt || null,
         });
 
         const compiled = await evaluate(data.content, {
@@ -88,38 +89,163 @@ export default function BlogDetails({ onBlogDeleted }) {
       })
       : "Unknown";
 
+
+
+
   if (loading) return <p className="mt-6 text-center text-gray-500">Loading…</p>;
   if (error) return <p className="mt-6 text-center text-red-500">{error}</p>;
   if (!blog) return <p className="mt-6 text-center text-gray-500">No blog found.</p>;
 
   return (
-    <div className="max-w-6xl mx-auto  p-2 border-2 m-2">
-      <header className="mb-3 text-center bg-stone-600 p-2">
-        <h1 className="text-4xl  text-black">
-          Title: {blog.title}
-        </h1>
-        {/* <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-            Published on {formatDate(blog.published)} · {blog.category}
-          </p> */}
-        <p className="text-3xl text-black ">
-          Description: {blog.description}
-        </p>
+    <div className="max-w-5xl mx-auto px-4 py-6 border-4 border-b-stone-900 my-1.5">
+    <  header className="prose prose-zinc prose-xl text-center mx-auto mb-10">
+        <h3 > <em>Title: {blog.title}</em></h3>
+        <h4><em>category: {blog.category}</em></h4>
+        <h5><em>Description: {blog.description}</em> </h5>
       </header>
+    {/* <  header className="prose prose-zinc prose-xl text-center mx-auto mb-10">
+        <h3 > <em>Title: {blog.title}</em></h3>
+        <h3><em>Published on {formatDate(blog.published)}</em></h3>      
+        <h4><em>category: {blog.category}</em></h4>
+        <h5><em>Description: {blog.description}</em> </h5>
+      </header> */}
 
-
-
-      <article className="prose prose-zinc prose-xl prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600 
-       max-w-none">
-
+      <article className="prose prose-zinc prose-xl prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600 max-w-none">
         <MDXProvider>
           {CompiledMDX ? <CompiledMDX /> : <p>Rendering content…</p>}
         </MDXProvider>
-
       </article>
-
-
-
     </div>
   );
-}
+};
+
+
+
+
+
+// !commited version
+// import React, { useEffect, useState } from "react";
+// import { useParams, useNavigate } from "react-router-dom";
+// import { evaluate } from "@mdx-js/mdx";
+// import { MDXProvider } from "@mdx-js/react";
+// import * as runtime from "react/jsx-runtime";
+// import rehypeHighlight from "rehype-highlight";
+// import remarkGfm from "remark-gfm";
+// import rehypeRaw from "rehype-raw";
+
+// import { useUser } from "../UserContext.jsx";
+// import { deleteBlog } from "../api.js";
+// import { API_BASE_URL } from "../api.js";
+// import axios from "axios";
+
+// export default function BlogDetails({ onBlogDeleted }) {
+//   const { slug } = useParams();
+//   const navigate = useNavigate();
+//   const { user } = useUser();
+
+//   const [blog, setBlog] = useState(null);
+//   const [CompiledMDX, setCompiledMDX] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     let isMounted = true;
+
+//     (async () => {
+//       try {
+//         setLoading(true);
+//         const { data } = await axios.get(`${API_BASE_URL}/blogs/slug/${slug}`);
+//         if (!isMounted) return;
+
+//         setBlog({
+//           title: data.title || "No Title",
+//           description: data.description || "",
+//           category: data.category || "Uncategorized",
+//           published: data.published || null,
+//         });
+
+//         const compiled = await evaluate(data.content, {
+//           ...runtime,
+//           jsx: runtime.jsx,
+//           jsxs: runtime.jsxs,
+//           jsxImportSource: "react",
+//           providerImportSource: "@mdx-js/react",
+//           outputFormat: "function-body",
+//           rehypePlugins: [rehypeRaw, rehypeHighlight],
+//           remarkPlugins: [remarkGfm],
+//           allowDangerousHtml: true,
+
+//         });
+
+//         if (isMounted) {
+//           setCompiledMDX(() => compiled.default);
+//         }
+//       } catch (err) {
+//         console.error("🔥 MDX Evaluation Error:", err.message);
+//         setError("Failed to render blog content.");
+//       } finally {
+//         if (isMounted) setLoading(false);
+//       }
+//     })();
+
+//     return () => {
+//       isMounted = false;
+//     };
+//   }, [slug]);
+
+//   const handleDelete = async () => {
+//     if (!window.confirm("Delete this blog?")) return;
+//     const success = await deleteBlog(slug, user.token);
+//     if (success) {
+//       alert("Blog deleted.");
+//       onBlogDeleted?.();
+//       navigate("/");
+//     } else {
+//       setError("Delete failed.");
+//     }
+//   };
+
+//   const formatDate = (d) =>
+//     d && !isNaN(Date.parse(d))
+//       ? new Date(d).toLocaleDateString("en-US", {
+//         year: "numeric",
+//         month: "long",
+//         day: "numeric",
+//       })
+//       : "Unknown";
+
+//   if (loading) return <p className="mt-6 text-center text-gray-500">Loading…</p>;
+//   if (error) return <p className="mt-6 text-center text-red-500">{error}</p>;
+//   if (!blog) return <p className="mt-6 text-center text-gray-500">No blog found.</p>;
+
+//   return (
+//     <div className="max-w-6xl mx-auto  p-2 border-2 m-2">
+//       <header className="mb-3 text-center bg-stone-600 p-2">
+//         <h1 className="text-4xl  text-black">
+//           Title: {blog.title}
+//         </h1>
+//         {/* <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+//             Published on {formatDate(blog.published)} · {blog.category}
+//           </p> */}
+//         <p className="text-3xl text-black ">
+//           Description: {blog.description}
+//         </p>
+//       </header>
+
+
+
+//       <article className="prose prose-zinc prose-xl prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600 
+//        max-w-none">
+
+//         <MDXProvider>
+//           {CompiledMDX ? <CompiledMDX /> : <p>Rendering content…</p>}
+//         </MDXProvider>
+
+//       </article>
+
+
+
+//     </div>
+//   );
+// }
 
