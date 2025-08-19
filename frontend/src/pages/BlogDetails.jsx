@@ -31,13 +31,9 @@ export default function BlogDetails({ onBlogDeleted }) {
         const { data } = await axios.get(`${API_BASE_URL}/blogs/slug/${slug}`);
         if (!isMounted) return;
 
-        setBlog({
-          title: data.title || "No Title",
-          description: data.description || "",
-          category: data.category || "Uncategorized",
-          published: data.published || null,
-        });
+        setBlog(data); // blog from DB
 
+        // Compile MDX body
         const compiled = await evaluate(data.content, {
           ...runtime,
           jsx: runtime.jsx,
@@ -79,47 +75,41 @@ export default function BlogDetails({ onBlogDeleted }) {
     }
   };
 
-  const formatDate = (d) =>
-    d && !isNaN(Date.parse(d))
-      ? new Date(d).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-      : "Unknown";
-
   if (loading) return <p className="mt-6 text-center text-gray-500">Loading…</p>;
   if (error) return <p className="mt-6 text-center text-red-500">{error}</p>;
   if (!blog) return <p className="mt-6 text-center text-gray-500">No blog found.</p>;
 
   return (
-    <div className="max-w-6xl mx-auto  p-2 border-2 m-2">
-      <header className="mb-3 text-center bg-stone-600 p-2">
-        <h1 className="text-4xl  text-black">
-          Title: {blog.title}
-        </h1>
-        {/* <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-            Published on {formatDate(blog.published)} · {blog.category}
-          </p> */}
-        <p className="text-3xl text-black ">
-          Description: {blog.description}
+    <div className="max-w-6xl mx-auto p-4 border-4 m-2">
+      <article className="prose prose-zinc prose-xl prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600 max-w-none">
+        {/* Title & metadata */}
+        <h1 className="">{blog.title}</h1>
+        <p>
+          <span className="font-bold text-black text-2xl">Description:</span>{" "}
+          {blog.description}
         </p>
-      </header>
 
-
-
-      <article className="prose prose-zinc prose-xl prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600 
-       max-w-none">
-
+        {/* Category */}
+        <p>
+          <span className="font-bold text-black text-2xl ">Category:</span>{" "}
+          {blog.category}
+        </p>
         <MDXProvider>
           {CompiledMDX ? <CompiledMDX /> : <p>Rendering content…</p>}
         </MDXProvider>
-
       </article>
 
-
-
+      {/* Delete button for admin or owner */}
+      {user && (user.role === "admin" || user._id === blog.user) && (
+        <div className="mt-6 text-right">
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Delete Blog
+          </button>
+        </div>
+      )}
     </div>
   );
 }
-
