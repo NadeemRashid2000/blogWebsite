@@ -17,8 +17,7 @@ The site includes a private admin panel with a built-in markdown editor for easy
       - [Backend](#backend)
       - [Database](#database)
   * [📸 Screenshots](#screenshots)
-  * [Author](#author)
-  * [License](#license)
+
 
 
 ## Configuration and Setup

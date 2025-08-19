@@ -9,7 +9,7 @@ const AboutPage = () => {
           {/* Title */}
           <header className="text-center space-y-3">
             <h1 className="text-4xl md:text-5xl font-bold">
-              About <span className="text-sky-400">SimpleBlog</span> & Myself
+              About <span className="text-sky-400">MyBlog</span> & Myself
             </h1>
 
           </header>
@@ -17,7 +17,7 @@ const AboutPage = () => {
           {/* Description */}
           <div className="space-y-6 text-lg leading-relaxed text-neutral-300">
             <p>
-              <strong className="text-white">SimpleBlog</strong> is a place to read helpful articles about web development and computer science. Whether you're learning frontend, backend, or CS fundamentals — this site is made to simplify the process.
+              <strong className="text-white">MyBlog</strong> is a place to read helpful articles about web development and computer science. Whether you're learning frontend, backend, or CS fundamentals — this site is made to simplify the process.
             </p>
 
             <p>
